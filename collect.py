@@ -5,7 +5,7 @@ import random
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--folder', default="c:\\data\\frc_images")
+parser.add_argument('--folder', default="c:\\data\\frc_images")  # on mac: /tmp/frc_images
 parser.add_argument('--prefix', default = str(random.randint(0, 10000)))
 
 args = parser.parse_args()
@@ -40,11 +40,12 @@ while(vid_capture.isOpened()):
         frame = cv2.flip(frame, 1)
         cv2.imshow('Frame',frame)
 
-        filename = os.path.join(folder, f'i_{args.prefix}_{count}.png')
+        filename = os.path.join(folder, f'i_{args.prefix}_{count:05d}.png')
         cv2.imwrite(filename, frame)
+        print(f'saved {filename}')
         count += 1
         # 20 is in milliseconds, try to increase the value, say 50 and observe
-        key = cv2.waitKey(100)
+        key = cv2.waitKey(500)
 
         if key == ord('q'):
             break
